@@ -1,63 +1,30 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <q-btn color="primary" size="xl" label="Nemám firemní účet" to="/form" />
-    <q-btn
-      color="primary"
-      size="xl"
-      label="Mám firemní účet"
-      @click="getGraphData"
-    />
+    Home Page
   </q-page>
 </template>
 
 <script setup lang="ts">
+
 import { useMsal } from '../composables/useMsal';
-import {
-  BrowserAuthError,
-  InteractionRequiredAuthError,
-  InteractionStatus,
-} from '@azure/msal-browser';
-import { reactive } from 'vue';
-import { loginRequest, graphConfig } from '../authConfig';
-import { useMsGraphApiCall } from '../composables/useMsGraphApiCall';
-import { useRouter } from 'vue-router';
 
-const { instance, inProgress } = useMsal();
+import { onBeforeMount } from 'vue';
+import { loginRequest } from '../authConfig';
 
-const router = useRouter();
+import { useIsAuthenticated } from 'src/composables/useIsAuthenticated';
 
-const state = reactive({
-  resolved: false,
-});
+const { instance } = useMsal();
+const isAuthenticated = useIsAuthenticated();
 
-async function getGraphData() {
-  const response = await instance
-    .acquireTokenSilent({
-      ...loginRequest,
-    })
-    .catch(async (e) => {
-      if (
-        e instanceof InteractionRequiredAuthError ||
-        e instanceof BrowserAuthError
-      ) {
-        await instance.acquireTokenRedirect(loginRequest);
-      }
-      throw e;
-    });
-  if (inProgress.value === InteractionStatus.None) {
-    // User profile
-    const graphData = await useMsGraphApiCall(
-      response.accessToken,
-      graphConfig.graphMeEndpoint
-    );
-    localStorage.setItem('displayNameGraph', graphData.displayName);
-    localStorage.setItem('extensionAttribute11Graph', graphData.displayName);
-    localStorage.setItem('extensionAttribute14Graph', graphData.displayName);
+/*
+onBeforeMount(async() => {
 
-    state.resolved = true;
-    router.push({ path: 'form' });
-  }
-}
+  console.log('isAuthenticated: ', isAuthenticated)
+
+  if(! isAuthenticated.value) await instance.loginRedirect(loginRequest)
+})
+
+*/
 
 // async function getGraphData() {
 //   if (result.value) {

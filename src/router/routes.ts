@@ -5,7 +5,13 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') },
+      {
+        path: 'index',
+        component: () => import('pages/IndexPage.vue'),
+        meta: {
+          requiresAuth: true,
+        }
+      },
       {
         path: 'profile',
         component: () => import('pages/ProfilePage.vue'),
@@ -17,6 +23,11 @@ const routes: RouteRecordRaw[] = [
         path: 'form',
         component: () => import('pages/ProfileNoGuardPage.vue'),
       },
+      {
+        path: 'error',
+        component: () => import('pages/ErrorNotFound.vue')
+      }
+
     ],
   },
 

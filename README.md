@@ -1,4 +1,4 @@
-# Quasar MSAL.js Demo (quasar-msaljs-demo)
+# Outsource Pool
 
 This demo is based on [Microsoft's MSAL.js 2 + Vue 3 + Typescript sample](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/samples/msal-browser-samples/vue3-sample-app).
 
