@@ -5,7 +5,7 @@ import { InteractionType, PopupRequest, PublicClientApplication, RedirectRequest
 export function registerGuard(router: Router) {
     router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
 
-      if (to.path == '/') return '/index'
+      //if (to.path == '/') return '/index'
 
       if (to.meta.requiresAuth) {
           const request = {

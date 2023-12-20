@@ -39,6 +39,8 @@ export const msalConfig = {
   }
 };
 
+
+
 export const msalInstance = new PublicClientApplication(msalConfig);
 
 // Add here scopes for id token to be used at MS Identity Platform endpoints.
